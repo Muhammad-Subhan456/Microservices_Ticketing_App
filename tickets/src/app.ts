@@ -6,6 +6,8 @@ import { errorHandler } from '@msatickets/common'
 import { NotFoundError, currentUser } from '@msatickets/common';
 import { createTicketRouter } from "./routes/new";
 import { showTicketRouter } from "./routes/show";
+import { indexRouter } from "./routes/index";
+import { updateTicketRouter } from "./routes/update";
 
 const app = express();
 app.set("trust proxy", true);
@@ -20,6 +22,8 @@ app.use(
 app.use(currentUser)
 app.use(createTicketRouter)
 app.use(showTicketRouter)
+app.use(indexRouter)
+app.use(updateTicketRouter)
 
 app.get('*',()=>{
   throw new NotFoundError();
