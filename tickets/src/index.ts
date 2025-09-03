@@ -8,7 +8,7 @@ const start = async()=>{
     throw new Error('JWT_KEY Must be Defined')
   }
   if(!process.env.MONGO_URI){
-    throw new Error('MONGO_URI Must Be Defined');
+    throw new Error('MONGO_URI Must be Defined')
   }
 
   try {
