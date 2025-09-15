@@ -4,10 +4,11 @@ import { json } from "body-parser";
 import cookieSession from "cookie-session";
 import { errorHandler } from '@msatickets/common'
 import { NotFoundError, currentUser } from '@msatickets/common';
-import { createTicketRouter } from "./routes/new";
-import { showTicketRouter } from "./routes/show";
+
+import { deleteOrderRouter } from "./routes/delete";
 import { indexRouter } from "./routes/index";
-import { updateTicketRouter } from "./routes/update";
+import { newOrderRouter } from "./routes/new";
+import { showOrderRouter } from "./routes/show";
 
 const app = express();
 app.set("trust proxy", true);
@@ -20,10 +21,10 @@ app.use(
 )
 
 app.use(currentUser)
-app.use(createTicketRouter)
-app.use(showTicketRouter)
+app.use(deleteOrderRouter)
 app.use(indexRouter)
-app.use(updateTicketRouter)
+app.use(newOrderRouter)
+app.use(showOrderRouter)
 
 app.get('*',()=>{
   throw new NotFoundError();
