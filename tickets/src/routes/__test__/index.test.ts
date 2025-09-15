@@ -1,6 +1,8 @@
 import request from "supertest"
 import { app } from "../../app"
 
+
+
 export const create = () => {
     return request(app).post('/api/tickets').set('Cookie', global.signup()).send({
         title: 'Movie',

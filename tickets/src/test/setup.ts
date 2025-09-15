@@ -8,10 +8,12 @@ declare global {
   var signup: () => string[];
 }
 
-jest.mock('../nats-wrapper.ts')
+jest.mock('../nat-wrapper')
 
 
 let mongo: any;
+
+
 beforeAll(async () => {
   jest.clearAllMocks()
   process.env.JWT_KEY = "asdf"

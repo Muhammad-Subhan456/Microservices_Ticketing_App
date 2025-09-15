@@ -2,9 +2,8 @@ import { BadRequestError, NotAuthorizedError, NotFoundError, requireAuth, valida
 import { body } from "express-validator"
 import express, { Request, Response } from "express"
 import { Ticket } from "../models/tickets"
-// import { natsWrapper } from "../nats-wrapper"
-// import { TicketUpdatedPublisher } from "../events/publishers/ticketUpdatedPublisher"
-
+import { natsWrapper } from "../nat-wrapper"
+import { TicketUpdatedPublisher } from "../events/publishers/ticket-updated-publisher"
 const router = express.Router()
 
 router.put('/api/tickets/:id', requireAuth, [
@@ -25,13 +24,13 @@ router.put('/api/tickets/:id', requireAuth, [
     }
     ticket.set({ title, price })
     await ticket.save();
-    // await new TicketUpdatedPublisher(natsWrapper.client).publish({
-    //     id: ticket.id,
-    //     title: ticket.title,
-    //     price: ticket.price,
-    //     userId: ticket.userId,
-    //     version: ticket.version
-    // })
+    await new TicketUpdatedPublisher(natsWrapper.client).publish({
+        id: ticket.id,
+        title: ticket.title,
+        price: ticket.price,
+        userId: ticket.userId,
+        version: ticket.version
+    })
 
     res.status(200).send(ticket)
 
